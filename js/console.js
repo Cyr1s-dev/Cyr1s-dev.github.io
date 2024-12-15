@@ -7,7 +7,7 @@ function createtime1() {
     var dnum = Math.floor(days);
 
     var ascll = [
-        `欢迎来到cΔerμs的博客!`,
+        `欢迎来到cyr1s的博客!`,
         `生活明朗，万物可爱✨`,
 "                                                       ___\n" +
 "                                                      |_  |\n" +
@@ -22,7 +22,7 @@ function createtime1() {
 "                                                        | |\n" +
 "                                                       _| |\n" +
 "                                                      |___| cjr",
-        "©2024 By cΔerμs"
+        "©2024 By cyr1s"
     ];
 
     setTimeout(
