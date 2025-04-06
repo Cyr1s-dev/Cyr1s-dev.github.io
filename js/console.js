@@ -49,7 +49,7 @@ function createtime2() {
     setTimeout(
         console.warn.bind(
             console,
-            "%c ⚡ Powered by cΔerμs %c 你正在访问cΔerμs的博客",
+            "%c ⚡ Powered by Cyr1s %c 你正在访问Cyr1s的博客",
             "color:white; background-color:#f0ad4e",
             ""
         )
