@@ -253,3 +253,7 @@ div#archive {
     min-height: 40px;
   }
 }
+
+#article-container figure.highlight > *:first-child {
+  display: none; 
+}
