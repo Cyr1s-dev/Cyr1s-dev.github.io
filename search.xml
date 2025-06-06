@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>APT样本分析</title>
+      <link href="/2025/06/05/APT%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90/"/>
+      <url>/2025/06/05/APT%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90/</url>
+      
+        <content type="html"><![CDATA[<h1 id="APT-C-35-360-APT-Q-38-奇安信-样本分析"><a href="#APT-C-35-360-APT-Q-38-奇安信-样本分析" class="headerlink" title="APT-C-35(360)/APT-Q-38(奇安信)样本分析"></a>APT-C-35(360)/APT-Q-38(奇安信)样本分析</h1><p>360内部编号：APT-C-35</p><p>奇安信内部编号：APT-Q-38</p><p>从<a href="https://app.any.run/submissions/">AppAnyRun</a>通过哈希值下载到样本</p><p><img src="\imgs\APT\APT-C-35\1.png" alt=""></p><p>沙箱分析文件行为</p><p><img src="\imgs\APT\APT-C-35\2.png" style="zoom: 67%;" /></p><p>该EXE样本图标被伪装为PDF</p><p>DIE发现该可执行文件存在签名，查看其签名为Ebo Sky Tech Inc</p><p><img src="\imgs\APT\APT-C-35\3.png" alt=""></p><p>发现其签名证书公司在苹果商店也曾上线过应用(</p><p><img src="\imgs\APT\APT-C-35\4.png" style="zoom: 50%;" /></p><p>该SSL签名证书早在4月份便被MalwareHunterTeam在推上曝光过被该恶意组织利用</p><p><img src="\imgs\APT\APT-C-35\5.png" alt=""></p><p>IDA对程序进行静态分析，程序首先获取了控制台窗口句柄，而后使用 <code>SW_HIDE</code> 隐藏控制台窗口</p><p><img src="\imgs\APT\APT-C-35\6.png" alt=""></p><p>先分析函数sub_672FE0()，这个函数采用互斥锁以单例模式初始化全局变量</p><p><img src="\imgs\APT\APT-C-35\7.png" alt=""></p><p>其中sub_671B00()中存在大量二进制0101字符串，以这种方式编码的字符串其中一部分是用于异或解密的key，这些key被用来还原样本导入的API名称等字符串</p><p><img src="\imgs\APT\APT-C-35\8.png" alt=""></p><p>根据之前沙箱动态分析结果，字符串交叉引用，定位到核心恶意功能的实现函数</p><p><img src="\imgs\APT\APT-C-35\9.png" alt=""></p><p>构建恶意任务计划命令</p><p><img src="\imgs\APT\APT-C-35\10.png" alt=""></p><p>每10分钟执行一次</p><p><img src="\imgs\APT\APT-C-35\11.png" alt=""></p><p>实际运行效果（当然这里是被ESET拦截了，但由于其对应C&amp;C服务器已下线，目前暂不重溯其后半脚本攻击流程</p><p><img src="\imgs\APT\APT-C-35\12.png" alt=""></p><p>未完待续</p><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1] <a href="https://pub1-bjyt.s3.360.cn/bcms/2024%E5%B9%B4%E5%85%A8%E7%90%83%E9%AB%98%E7%BA%A7%E6%8C%81%E7%BB%AD%E6%80%A7%E5%A8%81%E8%83%81%EF%BC%88APT%EF%BC%89%E7%A0%94%E7%A9%B6%E6%8A%A5%E5%91%8A.pdf">https://pub1-bjyt.s3.360.cn/bcms/2024年全球高级持续性威胁（APT）研究报告.pdf</a></p><p>[2] <a href="https://www.qianxin.com/threat/reportdetail?report_id=335">https://www.qianxin.com/threat/reportdetail?report_id=335</a></p><p>[3] <a href="https://www.nsfocus.com.cn/html/2025/92_0407/227.html">https://www.nsfocus.com.cn/html/2025/92_0407/227.html</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> APT </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Linux Kernel Pwn 学习笔记</title>
       <link href="/2025/05/30/Linux%20Kernel%20Pwn%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
       <url>/2025/05/30/Linux%20Kernel%20Pwn%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
