@@ -1,0 +1,71 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.4 Chrome/138.0.7204.97 Electron/37.2.1 Safari/537.36" version="28.0.4">
+  <diagram name="第 1 页" id="UDJSFSlXdIlGuzbnb-MN">
+    <mxGraphModel dx="991" dy="859" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zumrFixpA-lSDXkxOOOP-6" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="364" y="253.89" width="311" height="306.11" as="geometry" />
+        </mxCell>
+        <mxCell id="zumrFixpA-lSDXkxOOOP-3" value="" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#00188D;shape=mxgraph.mscae.enterprise.web_server" parent="1" vertex="1">
+          <mxGeometry x="445" y="280" width="60.8" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="zumrFixpA-lSDXkxOOOP-4" value="" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#00188D;shape=mxgraph.mscae.enterprise.web_server" parent="1" vertex="1">
+          <mxGeometry x="445" y="440" width="60.8" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="zumrFixpA-lSDXkxOOOP-5" value="" style="sketch=0;aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#00188D;shape=mxgraph.mscae.enterprise.domain_controller" parent="1" vertex="1">
+          <mxGeometry x="165" y="360" width="56" height="77.78" as="geometry" />
+        </mxCell>
+        <mxCell id="zumrFixpA-lSDXkxOOOP-7" value="&lt;div&gt;域成员&lt;/div&gt;IP：192.168.52.138" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="525" y="305" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zumrFixpA-lSDXkxOOOP-8" value="&lt;div&gt;域控主机&lt;/div&gt;IP：192.168.52.141" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="525" y="465" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zumrFixpA-lSDXkxOOOP-9" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0.665;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="zumrFixpA-lSDXkxOOOP-5" target="zumrFixpA-lSDXkxOOOP-6" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="415" y="340" as="sourcePoint" />
+            <mxPoint x="465" y="290" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zumrFixpA-lSDXkxOOOP-10" value="&lt;div style=&quot;text-align: left;&quot;&gt;Web服务器&lt;/div&gt;&lt;div&gt;外网IP：192.168.52.143&lt;/div&gt;内网IP：192.168.72.128" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="120.5" y="460" width="145" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zPnv2lOqzisBSXIb0w6q-2" value="" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/firewall.svg;" vertex="1" parent="1">
+          <mxGeometry x="70" y="368.97" width="36.5" height="59.84" as="geometry" />
+        </mxCell>
+        <mxCell id="zPnv2lOqzisBSXIb0w6q-3" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="zPnv2lOqzisBSXIb0w6q-2" target="zumrFixpA-lSDXkxOOOP-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="220" y="340" as="sourcePoint" />
+            <mxPoint x="270" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zPnv2lOqzisBSXIb0w6q-5" value="" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/firewall.svg;" vertex="1" parent="1">
+          <mxGeometry x="390" y="290.08" width="36.5" height="59.84" as="geometry" />
+        </mxCell>
+        <mxCell id="zPnv2lOqzisBSXIb0w6q-6" value="" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/firewall.svg;" vertex="1" parent="1">
+          <mxGeometry x="390" y="450.08" width="36.5" height="59.84" as="geometry" />
+        </mxCell>
+        <mxCell id="zPnv2lOqzisBSXIb0w6q-7" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="zumrFixpA-lSDXkxOOOP-6" target="zPnv2lOqzisBSXIb0w6q-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="340" as="sourcePoint" />
+            <mxPoint x="440" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zPnv2lOqzisBSXIb0w6q-8" value="" style="endArrow=none;dashed=1;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="zumrFixpA-lSDXkxOOOP-3" target="zPnv2lOqzisBSXIb0w6q-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="340" as="sourcePoint" />
+            <mxPoint x="440" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zPnv2lOqzisBSXIb0w6q-9" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="zumrFixpA-lSDXkxOOOP-4" target="zumrFixpA-lSDXkxOOOP-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="340" as="sourcePoint" />
+            <mxPoint x="440" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
