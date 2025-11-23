@@ -1,0 +1,533 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>经典非对称加密算法：RSA | Cyr1s</title><meta name="author" content="Cyr1s"><meta name="copyright" content="Cyr1s"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="单向函数（One-way Function） 对于每一个输入，函数值都容易计算（多项式时间）；但是对于一个随机的函数值，算出其对应的输入却比较困难（无法在多项式时间内使用确定性图灵机计算）。  最简单的单向函数是取模运算：m  mod  n &#x3D; a 例如 11  mod  2 &#x3D; 1 ，根据输入的数据11很容易知道输出结果是1，但是根据输出结果1无法知道输入数据是什么 m 作为原文，n 作为公开的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="经典非对称加密算法：RSA">
+<meta property="og:url" content="https://cyr1s.vercel.app/2024/01/11/%E7%BB%8F%E5%85%B8%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%EF%BC%9ARSA/index.html">
+<meta property="og:site_name" content="Cyr1s">
+<meta property="og:description" content="单向函数（One-way Function） 对于每一个输入，函数值都容易计算（多项式时间）；但是对于一个随机的函数值，算出其对应的输入却比较困难（无法在多项式时间内使用确定性图灵机计算）。  最简单的单向函数是取模运算：m  mod  n &#x3D; a 例如 11  mod  2 &#x3D; 1 ，根据输入的数据11很容易知道输出结果是1，但是根据输出结果1无法知道输入数据是什么 m 作为原文，n 作为公开的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cyr1s.vercel.app/imgs/RSA.png">
+<meta property="article:published_time" content="2024-01-11T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:10:32.542Z">
+<meta property="article:author" content="Cyr1s">
+<meta property="article:tag" content="Crypto">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cyr1s.vercel.app/imgs/RSA.png"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/Tri-Pic/Wordpress/img/icon.jpg"><link rel="canonical" href="https://cyr1s.vercel.app/2024/01/11/%E7%BB%8F%E5%85%B8%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%EF%BC%9ARSA/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: {"appId":"JC4WT5ALFE","apiKey":"bba2a739f3a887574225f0e0dc5f3d2c","indexName":"hexo-algolia","hits":{"per_page":6},"languages":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}.","hits_stats":"${hits} results found in ${time} ms"}},
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '经典非对称加密算法：RSA',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-11-21 14:10:32'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/aplayer.css"><script src="/js/smoothscroll.js" type="text/javascript"></script><script async data-pjax src="/js/aplayer.js"></script><script src="/js/Meting.js"></script><link rel="stylesheet" href="/css/rightMenu.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars.fastly.steamstatic.com/c857041ec42fa3fe98752c5ae357e69ac42a3639_full.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/imgs/RSA.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Cyr1s"><span class="site-name">Cyr1s</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">经典非对称加密算法：RSA</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-01-11T04:00:00.000Z" title="Created 2024-01-11 12:00:00">2024-01-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-11-21T06:10:32.542Z" title="Updated 2025-11-21 14:10:32">2025-11-21</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>7mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="经典非对称加密算法：RSA"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="单向函数（One-way-Function）"><a href="#单向函数（One-way-Function）" class="headerlink" title="单向函数（One-way Function）"></a>单向函数（One-way Function）</h1><blockquote>
+<p>对于每一个输入，函数值都容易计算（多项式时间）；但是对于一个随机的函数值，算出其对应的输入却比较困难（无法在多项式时间内使用确定性图灵机计算）。</p>
+</blockquote>
+<p>最简单的单向函数是取模运算：m  mod  n = a</p>
+<p>例如 <strong>11  mod  2 = 1</strong> ，根据输入的数据11很容易知道输出结果是1，但是根据输出结果1无法知道输入数据是什么</p>
+<p>m 作为原文，n 作为公开的密钥，a 作为加密后的密文 —— 即使我们拿到了密钥也无法解密，因为这是不可逆的</p>
+<hr>
+<h1 id="密码学的新方向-——-单向陷门函数（One-way-Trapdoor-Function）"><a href="#密码学的新方向-——-单向陷门函数（One-way-Trapdoor-Function）" class="headerlink" title="密码学的新方向 —— 单向陷门函数（One-way Trapdoor Function）"></a>密码学的新方向 —— 单向陷门函数（One-way Trapdoor Function）</h1><blockquote>
+<p>单项陷门函数是有一个陷门的一类特殊单向函数。单项陷门函数包含两个明显特征：一是单向性，二是存在陷门。</p>
+</blockquote>
+<p>单向函数存在 bug（陷门）吗？即可以实现单向函数的逆推。如果存在一种单向算法存在陷门，那么可以将这个算法称为<strong>单向陷门函数（One-way Trapdoor Function）</strong></p>
+<p>在1976年 W. Diffie 和 M. Hellman 提出了这样的美好设想：</p>
+<p>信息的接收者提前生成两个密钥，将一个单项陷门函数作为加密密钥公开发布（即<strong>公钥</strong>），信息的发送者使用公钥加密信息，信息的接收者自己保留的解密密钥（即<strong>私钥</strong>）就是这个单项陷门函数的陷门，接收者可以使用私钥解密加密后的密文</p>
+<p>密文可以被截获，但窃密者不持有私钥，无法解密密文。私钥永远在接收者手里，这样就没有了发送密钥被截获的风险</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Alex-Return-oriented/WordpressImg/img/One-way%20Trapdoor%20Function.png" alt="img"></p>
+<p>自此，密码学有了新的方向 —— <strong>公钥密码</strong>，加解密的不对称也被称为<strong>非对称密码</strong></p>
+<p>之所以在前文说这是 Diffie 和 Hellman 的美好设想，是因为 Diffie 和 Hellman 并没有找到合适的单向陷门函数……</p>
+<hr>
+<h1 id="RSA加密算法"><a href="#RSA加密算法" class="headerlink" title="RSA加密算法"></a>RSA加密算法</h1><p>R. L. Rivest、A. Shamir 和 L. Adleman 三人在 1978 年发表了题为 <em>A Method for Obtaining Digital Signatures and Public-key Cryptosystems</em> 的论文，在文中首次系统地提出了一种以三人姓氏命名的公钥加密算法——<strong>RSA 算法</strong></p>
+<p>在 RSA 体制中，对于给定的乘方取模运算：</p>
+<script type="math/tex; mode=display">
+m^e \bmod n = c</script><p>其中 $m$ 为明文，$c$ 为密文，$(e,n)$ 为加密所用的公钥。</p>
+<p>解密时希望存在某个指数 $d$，使得对密文 $c$ 执行以下“逆运算”，能还原出明文 $m$ ：</p>
+<script type="math/tex; mode=display">
+c^d \bmod n = m</script><p>我们可以把私钥指数 $d$ 看作这一乘方取模运算的“<strong>陷门</strong>”（trapdoor），因为一旦掌握 $d$，就可以有效地对 $c = m^e \bmod n$ 进行逆运算，恢复出明文 $m$。</p>
+<hr>
+<h2 id="一、RSA-的基本形式"><a href="#一、RSA-的基本形式" class="headerlink" title="一、RSA 的基本形式"></a>一、RSA 的基本形式</h2><ul>
+<li>公钥：$(e,n)$</li>
+<li>私钥：$(d,n)$</li>
+</ul>
+<p>将加密公式代入解密公式，有：</p>
+<script type="math/tex; mode=display">
+\left(m^e \bmod n\right)^d \bmod n = m</script><p>即</p>
+<script type="math/tex; mode=display">
+m^{ed} \bmod n = m</script><p>若能保证对所有与 $n$ 互质的 $m$ 都有</p>
+<script type="math/tex; mode=display">
+m^{ed} \equiv m \pmod{n}</script><p>就可以实现正确解密。根据欧拉定理，若 $\gcd(m,n)=1$，则有</p>
+<script type="math/tex; mode=display">
+m^{\varphi(n)} \equiv 1 \pmod{n}</script><p>由于</p>
+<script type="math/tex; mode=display">
+1^k \equiv 1</script><p>对等式两边同时乘方任意整数次 $k$，则有</p>
+<script type="math/tex; mode=display">
+m^{k\varphi(n)} \equiv 1 \pmod{n}</script><p>两边再同乘一个 $m$，有</p>
+<script type="math/tex; mode=display">
+m^{k\varphi(n)+1} \equiv m \pmod{n}</script><p>因此，只要令</p>
+<script type="math/tex; mode=display">
+ed \equiv 1\pmod{\varphi(n)}</script><p>即存在整数 $k$ 使</p>
+<script type="math/tex; mode=display">
+ed = k\varphi(n)+1</script><p>就能保证</p>
+<script type="math/tex; mode=display">
+m^{ed} = m^{k\varphi(n)+1} \equiv m \pmod{n}</script><p>解密过程即按预期恢复出明文。</p>
+<hr>
+<h2 id="二、欧拉函数-varphi-n-及其在-RSA-中的计算"><a href="#二、欧拉函数-varphi-n-及其在-RSA-中的计算" class="headerlink" title="二、欧拉函数 $\varphi(n)$ 及其在 RSA 中的计算"></a>二、欧拉函数 $\varphi(n)$ 及其在 RSA 中的计算</h2><p>欧拉函数 $\varphi(n)$ 定义为：<strong>不大于 $n$ 且与 $n$ 互质的正整数的个数</strong>。</p>
+<p>在 RSA 算法中通常取 $n = pq$，其中 $p,q$ 为两个不同的大素数。</p>
+<p>由欧拉函数乘法性结论可知：当 $p,q$ 为互质素数时，有</p>
+<script type="math/tex; mode=display">
+\varphi(n) = \varphi(pq) = \varphi(p)\varphi(q) = (p-1)(q-1)</script><p>证明如下：</p>
+<p>设 $n = pq$，其中 $p,q$ 互质且为素数。考虑集合 ${1,2,\dots,n}$ 中与 $n$ 不互质的整数。</p>
+<ul>
+<li>所有被 $p$ 整除的数为 ${p,2p,\dots,(q-1)p,qp}$，共有 $q$ 个；</li>
+<li>所有被 $q$ 整除的数为 ${q,2q,\dots,(p-1)q,pq}$，共有 $p$ 个。</li>
+</ul>
+<p>其中 $pq$ 被 $p$ 和 $q$ 同时整除，在上面两类中被重复计算一次，因此与 $n$ 不互质的数共有 $p + q - 1$ 个。</p>
+<p>从 ${1,2,\dots,n}$ 中去掉这些与 $n$ 不互质的数，则与 $n$ 互质的数的个数为：</p>
+<script type="math/tex; mode=display">
+\varphi(n) = n - (p+q-1) = pq - p - q + 1 = (p-1)(q-1).</script><hr>
+<h2 id="三、欧拉定理及其证明"><a href="#三、欧拉定理及其证明" class="headerlink" title="三、欧拉定理及其证明"></a>三、欧拉定理及其证明</h2><p><strong>欧拉定理</strong>：若 $\gcd(c,n)=1$，则</p>
+<script type="math/tex; mode=display">
+c^{\varphi(n)} \equiv 1 \pmod{n}</script><p>证明如下：</p>
+<p>设所有小于等于 $n$ 且与 $n$ 互质的整数为</p>
+<script type="math/tex; mode=display">
+\{a_1,a_2,\dots,a_{\varphi(n)}\}</script><p>取任意 $c$，满足 $\gcd(c,n)=1$。对每个 $a_i$，考虑乘积</p>
+<script type="math/tex; mode=display">
+c\cdot a_i \pmod{n}</script><p>由于 $c$ 与 $n$ 互质，乘法在模 $n$ 的剩余类中是一个双射映射，所以集合</p>
+<script type="math/tex; mode=display">
+\{c a_1 \bmod n,\; c a_2 \bmod n,\;\dots,\; c a_{\varphi(n)} \bmod n\}</script><p>只是 ${a<em>1,a_2,\dots,a</em>{\varphi(n)}}$ 的一个重新排列。</p>
+<p>因此有：</p>
+<script type="math/tex; mode=display">
+\prod_{k=1}^{\varphi(n)} (c a_k) \equiv \prod_{k=1}^{\varphi(n)} a_k \pmod{n}</script><p>展开左边得到：</p>
+<script type="math/tex; mode=display">
+c^{\varphi(n)} \cdot \prod_{k=1}^{\varphi(n)} a_k \equiv \prod_{k=1}^{\varphi(n)} a_k \pmod{n}</script><p>由于 $\prod_{k=1}^{\varphi(n)} a_k$ 与 $n$ 互质，可以在模 $n$ 意义下约去该乘积，最终得到：</p>
+<script type="math/tex; mode=display">
+c^{\varphi(n)} \equiv 1 \pmod{n}</script><p>得证欧拉定理。</p>
+<hr>
+<h2 id="四、解密指数-d-的构造与存在性条件"><a href="#四、解密指数-d-的构造与存在性条件" class="headerlink" title="四、解密指数 $d$ 的构造与存在性条件"></a>四、解密指数 $d$ 的构造与存在性条件</h2><p>由欧拉定理可知，对任意与 $n$ 互质的 $m$ 有</p>
+<script type="math/tex; mode=display">
+m^{\varphi(n)} \equiv 1 \pmod{n}</script><p>因此对任意整数 $k$</p>
+<script type="math/tex; mode=display">
+\bigl(m^{\varphi(n)}\bigr)^k \equiv 1 \pmod{n}</script><p>进一步得到</p>
+<script type="math/tex; mode=display">
+m^{k\varphi(n)+1} \equiv m \pmod{n}</script><p>若令</p>
+<script type="math/tex; mode=display">
+ed = k\varphi(n)+1</script><p>则</p>
+<script type="math/tex; mode=display">
+m^{ed} \equiv m \pmod{n}</script><p>即解密公式成立。此时有：</p>
+<script type="math/tex; mode=display">
+d = \frac{k\varphi(n)+1}{e}</script><p>要使 $d$ 为整数，必须保证<strong>存在整数解</strong> $d$，即</p>
+<script type="math/tex; mode=display">
+ed \equiv 1 \pmod{\varphi(n)}</script><p>等价于</p>
+<script type="math/tex; mode=display">
+\gcd(e,\varphi(n)) = 1</script><p>也就是说，公钥指数 $e$ 必须与 $\varphi(n)$ 互质。</p>
+<hr>
+<h2 id="五、数值示例与-d-的选择"><a href="#五、数值示例与-d-的选择" class="headerlink" title="五、数值示例与 $d$ 的选择"></a>五、数值示例与 $d$ 的选择</h2><p>例如，设 $n = 34$。因为</p>
+<script type="math/tex; mode=display">
+34 = 2 \times 17,\quad \varphi(34) = (2-1)(17-1) = 16</script><p>取 $e = 15$，则 $\gcd(15,16)=1$，存在整数 $d$ 使得</p>
+<script type="math/tex; mode=display">
+15d \equiv 1 \pmod{16}</script><p>由于 $15 \equiv -1 \pmod{16}$，上式可写为</p>
+<script type="math/tex; mode=display">
+d \equiv -1 \pmod{16},\quad -1 \equiv 15 \pmod{16}
+\Rightarrow d \equiv 15 \pmod{16}</script><p>因此最小正整数解为 $d = 15$</p>
+<p>从 $ed = k\varphi(n)+1$ 角度来看，有</p>
+<script type="math/tex; mode=display">
+15d = k\cdot 16 + 1</script><p>取 $k = 14$ 时</p>
+<script type="math/tex; mode=display">
+d = \frac{14\cdot 16 + 1}{15} = \frac{225}{15} = 15</script><p>若取 $k = 29$，则</p>
+<script type="math/tex; mode=display">
+d = \frac{29\cdot 16 + 1}{15} = 31</script><p>同样是一个整数解，并满足 $d \equiv 15 \pmod{16}$。在实际 RSA 中，我们<strong>通常选取最小的正整数解</strong>作为私钥指数 $d$。</p>
+<p>快速求解这一类同余方程 $ed \equiv 1 \pmod{\varphi(n)}$ 的标准方法是<strong>扩展欧几里得算法</strong>，它能高效地给出 $e$ 在模 $\varphi(n)$ 意义下的逆元 $d$。</p>
+<hr>
+<h2 id="六、RSA-实际运用与安全性"><a href="#六、RSA-实际运用与安全性" class="headerlink" title="六、RSA 实际运用与安全性"></a>六、RSA 实际运用与安全性</h2><ol>
+<li><p><strong>接收者生成密钥：</strong></p>
+<ul>
+<li><p>选取两个足够大的素数 $p$ 和 $q$，计算 $n = pq$；</p>
+</li>
+<li><p>计算 $\varphi(n) = (p-1)(q-1)$；</p>
+</li>
+<li><p>选取一个与 $\varphi(n)$ 互质的整数 $e$ 作为公钥指数；</p>
+</li>
+<li><p>利用扩展欧几里得算法求解</p>
+<script type="math/tex; mode=display">
+ed \equiv 1 \pmod{\varphi(n)}</script><p>得到私钥指数 $d$。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>发布公钥：</strong><br> 接收者将 $(e,n)$ 公开作为公钥，$(d,n)$ 保密作为私钥。</p>
+</li>
+<li><p><strong>发送者加密：</strong><br> 发送者要传输明文 $m$（通常要求 $0 \le m &lt; n$ 且 $\gcd(m,n)=1$），使用公钥进行加密：</p>
+<script type="math/tex; mode=display">
+c = m^e \bmod n</script></li>
+<li><p><strong>接收者解密：</strong><br> 接收者收到密文 $c$ 后，用私钥解密：</p>
+<script type="math/tex; mode=display">
+m = c^d \bmod n</script><p>从而恢复原始明文 $m$。</p>
+</li>
+</ol>
+<p>RSA 的安全性主要基于如下事实：</p>
+<ul>
+<li><p>若已知 $p,q$，则可以轻易计算 $\varphi(n)$，进而由 $e$ 计算出 $d$；</p>
+</li>
+<li><p>但对于足够大的 $n$，如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n = 22112825529529666435281085255026230927612089502470015394413748319128822941402001986512729726569746599085900330031400051170742204560859276357953757185954298838958709229238491006703034124620545784566413664540684214361293017694020846391065875914794251435144458199</span><br></pre></td></tr></table></figure>
+<p><strong>将 $n$ 分解为 $p$ 与 $q$ 在计算上极其困难</strong>。</p>
+</li>
+</ul>
+<p>因此，虽然公钥 $(e,n)$ 是公开的，但攻击者在没有办法分解出 $n$ 的前提下，难以求得 $\varphi(n)$，也就难以求出私钥 $d$，从而无法从截获的密文中恢复明文。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Alex-Return-oriented/WordpressImg/img/RSA.png" alt="img"></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1] Rose-Hulman Scholar . <a target="_blank" rel="noopener" href="https://scholar.rose-hulman.edu/cgi/viewcontent.cgi?article=1081&amp;context=rhumj">https://scholar.rose-hulman.edu/cgi/viewcontent.cgi?article=1081&amp;context=rhumj</a></p>
+</article><div class="post-copyright"><div class="post-copyright__title"><span class="post-copyright-info"><h>经典非对称加密算法：RSA</h></span></div><div class="post-copyright__type"><span class="post-copyright-info"><a href="https://cyr1s.vercel.app/2024/01/11/%E7%BB%8F%E5%85%B8%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%EF%BC%9ARSA/">https://cyr1s.vercel.app/2024/01/11/经典非对称加密算法：RSA/</a></span></div><div class="post-copyright-m"><div class="post-copyright-m-info"><div class="post-copyright-a"><h>作者</h><div class="post-copyright-cc-info"><h>Cyr1s</h></div></div><div class="post-copyright-c"><h>发布于</h><div class="post-copyright-cc-info"><h>2024-01-11</h></div></div><div class="post-copyright-u"><h>更新于</h><div class="post-copyright-cc-info"><h>2025-11-21</h></div></div><div class="post-copyright-c"><h>许可协议</h><div class="post-copyright-cc-info"><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a rel="noopener" target="_blank" title="木兰公共许可证 BY-PL-SA" href="http://license.coscl.org.cn/MulanPubL-2.0">木兰公共许可证 BY-PL-SA</a></div></div></div></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Crypto/">Crypto</a></div><div class="post_share"><div class="social-share" data-image="/imgs/RSA.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2024/01/20/WordPress%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B/" title="Wordpress部署教程"><img class="cover" src="/imgs/Wordpress.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">Wordpress部署教程</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://avatars.fastly.steamstatic.com/c857041ec42fa3fe98752c5ae357e69ac42a3639_full.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Cyr1s</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Cyr1s-dev"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Cyr1s-dev" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content"><center>主域名：<br><a target="_blank" rel="noopener" href="https://Cyr1s-dev.github.io/"><b><font color="#5ea6e5">cyr1s-dev.github.io</font></b></a><br>备用域名：<br><a href="https://cyr1s.vercel.app/"><b><font color="#5ea6e5">cyr1s.vercel.app</font></b></a></center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E5%90%91%E5%87%BD%E6%95%B0%EF%BC%88One-way-Function%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">单向函数（One-way Function）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E5%AD%A6%E7%9A%84%E6%96%B0%E6%96%B9%E5%90%91-%E2%80%94%E2%80%94-%E5%8D%95%E5%90%91%E9%99%B7%E9%97%A8%E5%87%BD%E6%95%B0%EF%BC%88One-way-Trapdoor-Function%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">密码学的新方向 —— 单向陷门函数（One-way Trapdoor Function）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RSA%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">RSA加密算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81RSA-%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BD%A2%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">一、RSA 的基本形式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0-varphi-n-%E5%8F%8A%E5%85%B6%E5%9C%A8-RSA-%E4%B8%AD%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="toc-number">3.2.</span> <span class="toc-text">二、欧拉函数 $\varphi(n)$ 及其在 RSA 中的计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%AC%A7%E6%8B%89%E5%AE%9A%E7%90%86%E5%8F%8A%E5%85%B6%E8%AF%81%E6%98%8E"><span class="toc-number">3.3.</span> <span class="toc-text">三、欧拉定理及其证明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%A7%A3%E5%AF%86%E6%8C%87%E6%95%B0-d-%E7%9A%84%E6%9E%84%E9%80%A0%E4%B8%8E%E5%AD%98%E5%9C%A8%E6%80%A7%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.4.</span> <span class="toc-text">四、解密指数 $d$ 的构造与存在性条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%95%B0%E5%80%BC%E7%A4%BA%E4%BE%8B%E4%B8%8E-d-%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">3.5.</span> <span class="toc-text">五、数值示例与 $d$ 的选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81RSA-%E5%AE%9E%E9%99%85%E8%BF%90%E7%94%A8%E4%B8%8E%E5%AE%89%E5%85%A8%E6%80%A7"><span class="toc-number">3.6.</span> <span class="toc-text">六、RSA 实际运用与安全性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('/imgs/RSA.png')"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Cyr1s</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer src="/js/cursor.js"></script><!-- 嘉然 --><script src="https://cdn.jsdelivr.net/npm/greensock@1.20.2/dist/TweenLite.js"></script><script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pixi.js@5.3.6/dist/pixi.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.1/dist/cubism4.min.js"></script><link href="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/pio.css" rel="stylesheet" type="text/css"/><script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/pio.js"></script><script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/pio_sdk4.js"></script><script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/load.js"></script><!-- 嘉然 --><!-- rightMenu --><script defer src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script><script defer data-pjax src="/js/rightMenu.js"></script><script async src="/js/console.js"></script><script src="/js/inject-scroll.js" type="text/javascript"></script><link rel="stylesheet" href="/css/APlayer.min.css" media="print" onload="this.media='all'"><script src="/js/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.22.1/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.65.0/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js?v=4.13.0"></script></div></div><div id="nav-music"><div id="nav-music-hoverTips" onclick="triblade.musicToggle()">播放音乐</div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--triblade-main)" data-lrctype="0" order="random"></meting-js></div><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.22.1/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.65.0/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js?v=4.13.0"></script></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><script defer src="/js/cursor.js"></script><!-- 嘉然 --><script src="https://cdn.jsdelivr.net/npm/greensock@1.20.2/dist/TweenLite.js"></script><script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pixi.js@5.3.6/dist/pixi.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.3.1/dist/cubism4.min.js"></script><link href="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/pio.css" rel="stylesheet" type="text/css"/><script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/pio.js"></script><script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/pio_sdk4.js"></script><script src="https://cdn.jsdelivr.net/gh/journey-ad/blog-img@76ba2b3/live2d/lib/load.js"></script><!-- 嘉然 --><!-- rightMenu --><script defer src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script><script defer data-pjax src="/js/rightMenu.js"></script><script async src="/js/console.js"></script><script src="/js/inject-scroll.js" type="text/javascript"></script><link rel="stylesheet" href="/css/APlayer.min.css" media="print" onload="this.media='all'"><script src="/js/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="algolia-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="search-wrap"><div id="algolia-search-input"></div><hr/><div id="algolia-search-results"><div id="algolia-hits"></div><div id="algolia-pagination"></div><div id="algolia-info"><div class="algolia-stats"></div><div class="algolia-poweredBy"></div></div></div></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.22.1/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.65.0/dist/instantsearch.production.min.js"></script><script src="/js/search/algolia.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>
