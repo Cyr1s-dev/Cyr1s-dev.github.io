@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>NjRAT 样本分析 | Cyr1s</title><meta name="author" content="Cyr1s"><meta name="copyright" content="Cyr1s"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1. 概述NjRAT（又称为 Bladabindi）是一款带有图形用户界面（GUI）的远程访问工具（RAT），允许攻击者远程控制和监视受害者计算机，进行键盘记录、截图捕获、文件操作和数据窃取。该恶意软件以其广泛的功能而闻名，被用于各种网络犯罪活动。 最早的 NjRAT 由一个名为 M38dHhM 的组织创建，该组织据信位于阿拉伯语国家，主要针对中东地区。自 2013 年其源代码泄露后，出现了多个修">
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>NjRAT 样本分析 | Cyr1s</title><meta name="author" content="Cyr1s"><meta name="copyright" content="Cyr1s"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1. 概述 NjRAT（又称为 Bladabindi）是一款带有图形用户界面（GUI）的远程访问工具（RAT），允许攻击者远程控制和监视受害者计算机，进行键盘记录、截图捕获、文件操作和数据窃取。该恶意软件以其广泛的功能而闻名，被用于各种网络犯罪活动。 最早的 NjRAT 由一个名为 M38dHhM 的组织创建，该组织据信位于阿拉伯语国家，主要针对中东地区。自 2013 年其源代码泄露后，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NjRAT 样本分析">
 <meta property="og:url" content="https://cyr1s.vercel.app/2025/11/23/NjRAT%20%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Cyr1s">
-<meta property="og:description" content="1. 概述NjRAT（又称为 Bladabindi）是一款带有图形用户界面（GUI）的远程访问工具（RAT），允许攻击者远程控制和监视受害者计算机，进行键盘记录、截图捕获、文件操作和数据窃取。该恶意软件以其广泛的功能而闻名，被用于各种网络犯罪活动。 最早的 NjRAT 由一个名为 M38dHhM 的组织创建，该组织据信位于阿拉伯语国家，主要针对中东地区。自 2013 年其源代码泄露后，出现了多个修">
+<meta property="og:description" content="1. 概述 NjRAT（又称为 Bladabindi）是一款带有图形用户界面（GUI）的远程访问工具（RAT），允许攻击者远程控制和监视受害者计算机，进行键盘记录、截图捕获、文件操作和数据窃取。该恶意软件以其广泛的功能而闻名，被用于各种网络犯罪活动。 最早的 NjRAT 由一个名为 M38dHhM 的组织创建，该组织据信位于阿拉伯语国家，主要针对中东地区。自 2013 年其源代码泄露后，">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cyr1s.vercel.app/imgs/NjRAT.png">
 <meta property="article:published_time" content="2025-11-23T09:30:00.000Z">
@@ -156,140 +156,363 @@
     })(window)</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/aplayer.css"><script src="/js/smoothscroll.js" type="text/javascript"></script><script async data-pjax src="/js/aplayer.js"></script><script src="/js/Meting.js"></script><link rel="stylesheet" href="/css/rightMenu.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
 <style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
   white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
-<link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars.fastly.steamstatic.com/c857041ec42fa3fe98752c5ae357e69ac42a3639_full.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/imgs/NjRAT.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Cyr1s"><span class="site-name">Cyr1s</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">NjRAT 样本分析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-11-23T09:30:00.000Z" title="Created 2025-11-23 17:30:00">2025-11-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-11-23T10:24:39.078Z" title="Updated 2025-11-23 18:24:39">2025-11-23</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">2.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>8mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="NjRAT 样本分析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h1><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/NjRAT">NjRAT</a>（又称为 Bladabindi）是一款带有图形用户界面（GUI）的远程访问工具（RAT），允许攻击者远程控制和监视受害者计算机，进行键盘记录、截图捕获、文件操作和数据窃取。该恶意软件以其广泛的功能而闻名，被用于各种网络犯罪活动。</p>
-<p>最早的 NjRAT 由一个名为 M38dHhM 的组织创建，该组织据信位于阿拉伯语国家，主要针对中东地区。自 2013 年其源代码泄露后，出现了多个修改版本，包括但不限于：</p>
+<link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://avatars.fastly.steamstatic.com/c857041ec42fa3fe98752c5ae357e69ac42a3639_full.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/imgs/NjRAT.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Cyr1s"><span class="site-name">Cyr1s</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">NjRAT 样本分析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-11-23T09:30:00.000Z" title="Created 2025-11-23 17:30:00">2025-11-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-11-23T10:24:39.078Z" title="Updated 2025-11-23 18:24:39">2025-11-23</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">2.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>8mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="NjRAT 样本分析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="概述">1. 概述</h1>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/NjRAT">NjRAT</a>（又称为
+Bladabindi）是一款带有图形用户界面（GUI）的远程访问工具（RAT），允许攻击者远程控制和监视受害者计算机，进行键盘记录、截图捕获、文件操作和数据窃取。该恶意软件以其广泛的功能而闻名，被用于各种网络犯罪活动。</p>
+<p>最早的 NjRAT 由一个名为 M38dHhM
+的组织创建，该组织据信位于阿拉伯语国家，主要针对中东地区。自 2013
+年其源代码泄露后，出现了多个修改版本，包括但不限于：</p>
 <ul>
-<li><p>NjRAT 0.7d Danger Edition</p>
-</li>
-<li><p>NjRAT 0.7d Golden Edition</p>
-</li>
-<li><p>NjRAT 0.7d Green Edition</p>
-</li>
-<li><p>NjRAT Lime Edition</p>
-</li>
+<li><p>NjRAT 0.7d Danger Edition</p></li>
+<li><p>NjRAT 0.7d Golden Edition</p></li>
+<li><p>NjRAT 0.7d Green Edition</p></li>
+<li><p>NjRAT Lime Edition</p></li>
 </ul>
-<h1 id="2-环境配置"><a href="#2-环境配置" class="headerlink" title="2. 环境配置"></a>2. 环境配置</h1><p>在此次分析中，我们采用的 NjRAT 变种为 NjRAT 0.7d Green Edition。</p>
-<p>Github 仓库链接：<a target="_blank" rel="noopener" href="https://github.com/XAKEP-1lly/NjRat-0.7D-Green-Edition-by-im523">https://github.com/XAKEP-1lly/NjRat-0.7D-Green-Edition-by-im523</a></p>
-<h2 id="2-1-环境搭建"><a href="#2-1-环境搭建" class="headerlink" title="2.1 环境搭建"></a>2.1 环境搭建</h2><p>本实验共使用三台虚拟机：其中两台运行于 Hyper-V 的 Windows 10 Pro x64 虚拟机分别承担攻击端和受害端的角色；另一台运行于 VMware 的 Windows XP SP3 虚拟机，作为兼容性测试环境，用于对比分析样本在旧版系统中的行为。</p>
+<h1 id="环境配置">2. 环境配置</h1>
+<p>在此次分析中，我们采用的 NjRAT 变种为 NjRAT 0.7d Green Edition。</p>
+<p>Github
+仓库链接：https://github.com/XAKEP-1lly/NjRat-0.7D-Green-Edition-by-im523</p>
+<h2 id="环境搭建">2.1 环境搭建</h2>
+<p>本实验共使用三台虚拟机：其中两台运行于 Hyper-V 的 Windows 10 Pro x64
+虚拟机分别承担攻击端和受害端的角色；另一台运行于 VMware 的 Windows XP
+SP3 虚拟机，作为兼容性测试环境，用于对比分析样本在旧版系统中的行为。</p>
 <p>攻击端与受害端的 IP 地址：</p>
-<p><img src="\imgs\NjRAT\1.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\1.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>兼容性测试环境 IP 地址：</p>
-<p><img src="\imgs\NjRAT\2.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\2.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>拓扑架构如下：</p>
-<p><img src="\imgs\NjRAT\3.png" alt="undefined"></p>
-<h2 id="2-2-NjRAT-创建"><a href="#2-2-NjRAT-创建" class="headerlink" title="2.2 NjRAT 创建"></a>2.2 NjRAT 创建</h2><p>运行 NjRAT 控制端后，会弹出一个窗口，以设置C2服务器的监听端口。</p>
-<p><img src="\imgs\NjRAT\4.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\3.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<h2 id="njrat-创建">2.2 NjRAT 创建</h2>
+<p>运行 NjRAT 控制端后，会弹出一个窗口，以设置C2服务器的监听端口。</p>
+<figure>
+<img src="\imgs\NjRAT\4.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>通过左下角的 Builder 选项，可以生成 NjRAT 客户端可执行文件。</p>
-<p><img src="\imgs\NjRAT\5.png" alt="undefined"></p>
-<h2 id="2-3-NjRAT-利用"><a href="#2-3-NjRAT-利用" class="headerlink" title="2.3 NjRAT 利用"></a>2.3 NjRAT 利用</h2><p>受害者运行 NjRAT Builder 生成的 exe 文件之后，NjRAT 控制端即可在面板中看到主机上线。</p>
-<p><img src="\imgs\NjRAT\6.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\5.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<h2 id="njrat-利用">2.3 NjRAT 利用</h2>
+<p>受害者运行 NjRAT Builder 生成的 exe 文件之后，NjRAT
+控制端即可在面板中看到主机上线。</p>
+<figure>
+<img src="\imgs\NjRAT\6.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>攻击者可以利用 NjRAT C2 控制端下发指令。</p>
-<p><img src="\imgs\NjRAT\7.png" alt="undefined"></p>
-<h1 id="3-静态分析"><a href="#3-静态分析" class="headerlink" title="3. 静态分析"></a>3. 静态分析</h1><p>我们先对生成的 NjRAT 客户端程序进行静态分析。</p>
-<h2 id="3-1-基本信息"><a href="#3-1-基本信息" class="headerlink" title="3.1 基本信息"></a>3.1 基本信息</h2><p>通过 DIE 对其进行扫描，可知其为 Win32 PE 格式，采用 VB.NET 编译，基于 .NET Framework 2.0。</p>
-<p>DIE 内置的特征库将其识别为 NjRAT 0.7D Green Edition Malware，与样本来源一致。</p>
+<figure>
+<img src="\imgs\NjRAT\7.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<h1 id="静态分析">3. 静态分析</h1>
+<p>我们先对生成的 NjRAT 客户端程序进行静态分析。</p>
+<h2 id="基本信息">3.1 基本信息</h2>
+<p>通过 DIE 对其进行扫描，可知其为 Win32 PE 格式，采用 VB.NET 编译，基于
+.NET Framework 2.0。</p>
+<p>DIE 内置的特征库将其识别为 NjRAT 0.7D Green Edition
+Malware，与样本来源一致。</p>
 <p><img src="\imgs\NjRAT\8.png" alt="undefined" style="zoom: 80%;" /></p>
 <p>程序香农熵低于 5，说明其未经过额外的压缩壳或加密壳处理。</p>
-<p><img src="\imgs\NjRAT\9.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\9.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>在 pestudio 中打开该程序，可以看到其导入函数与字符串信息。</p>
-<p><img src="\imgs\NjRAT\10.png" alt="undefined"></p>
-<p>根据 pestudio 列出的字符串，可知程序具备：修改注册表、关闭计算机、禁用任务管理器以及修改防火墙策略等功能。</p>
-<p><img src="\imgs\NjRAT\11.png" alt="undefined"></p>
-<h2 id="3-2-代码分析"><a href="#3-2-代码分析" class="headerlink" title="3.2 代码分析"></a>3.2 代码分析</h2><p>由于 njRAT 基于 Microsoft .NET Framework 开发，客户端程序被编译为 MSIL（Microsoft Intermediate Language），而非直接生成原生机器码，程序内保留了较为完整的元数据信息，其类名、方法名以及部分变量信息在反编译后仍然可读。基于这一特性，我们采用 dnSpy 对其程序集进行反编译与代码分析。</p>
+<figure>
+<img src="\imgs\NjRAT\10.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>根据 pestudio
+列出的字符串，可知程序具备：修改注册表、关闭计算机、禁用任务管理器以及修改防火墙策略等功能。</p>
+<figure>
+<img src="\imgs\NjRAT\11.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<h2 id="代码分析">3.2 代码分析</h2>
+<p>由于 njRAT 基于 Microsoft .NET Framework 开发，客户端程序被编译为
+MSIL（Microsoft Intermediate
+Language），而非直接生成原生机器码，程序内保留了较为完整的元数据信息，其类名、方法名以及部分变量信息在反编译后仍然可读。基于这一特性，我们采用
+dnSpy 对其程序集进行反编译与代码分析。</p>
 <p>njRAT 的入口点在 main() 函数，调用了 OK.ko() 函数。</p>
-<p><img src="\imgs\NjRAT\12.png" alt="undefined"></p>
-<p>检测程序是否带参数启动，如果存在参数，就会在注册表 HKEY_CURRENT_USER 中写入 <code>di</code> 值，延迟5s再往下执行。</p>
-<p><img src="\imgs\NjRAT\13.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\12.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>检测程序是否带参数启动，如果存在参数，就会在注册表 HKEY_CURRENT_USER
+中写入 <code>di</code> 值，延迟5s再往下执行。</p>
+<figure>
+<img src="\imgs\NjRAT\13.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>这里创建了一个互斥体，以确保只有一个实例在运行。若创建互斥体失败，即另一个实例正在运行，则会终止当前实例。</p>
-<p><img src="\imgs\NjRAT\14.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\14.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>调用 INS() 函数执行程序的安装逻辑，以进行持久化、传播。</p>
-<p><img src="\imgs\NjRAT\15.png" alt="undefined"></p>
-<p>跟进 INS() 函数，这里一系列操作大致逻辑为：自复制安装到指定目录、添加防火墙例外、Run 项自启动、启动文件夹自启动、杀掉指定进程（可设置为杀毒软件）、隐藏自身文件、USB 传播。</p>
+<figure>
+<img src="\imgs\NjRAT\15.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>跟进 INS()
+函数，这里一系列操作大致逻辑为：自复制安装到指定目录、添加防火墙例外、Run
+项自启动、启动文件夹自启动、杀掉指定进程（可设置为杀毒软件）、隐藏自身文件、USB
+传播。</p>
 <p>自复制安装到指定目录</p>
-<p><img src="\imgs\NjRAT\16.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\16.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>修改防火墙规则，添加自身为例外</p>
-<p><img src="\imgs\NjRAT\17.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\17.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>Run 项自启动、启动文件夹自启动</p>
-<p><img src="\imgs\NjRAT\18.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\18.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>杀掉指定进程</p>
-<p><img src="\imgs\NjRAT\19.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\19.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>隐藏自身文件</p>
-<p><img src="\imgs\NjRAT\20.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\20.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>USB 传播</p>
-<p><img src="\imgs\NjRAT\21.png" alt="undefined"></p>
-<p>这里程序比较细节的一点是不仅写了 INS() 函数，还额外写了 UNS() 函数，方便在需要时清理自身。</p>
-<p><img src="\imgs\NjRAT\22.png" alt="undefined"></p>
-<p>回到 OK.ko() 函数继续往下看，这里启动了三个后台线程，其中 RC() 负责接收 C2 数据包，kq.WRK() 记录击键数据，mgr.protect() 进行进程自保。</p>
-<p><img src="\imgs\NjRAT\23.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\21.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>这里程序比较细节的一点是不仅写了 INS() 函数，还额外写了 UNS()
+函数，方便在需要时清理自身。</p>
+<figure>
+<img src="\imgs\NjRAT\22.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>回到 OK.ko() 函数继续往下看，这里启动了三个后台线程，其中 RC()
+负责接收 C2 数据包，kq.WRK() 记录击键数据，mgr.protect()
+进行进程自保。</p>
+<figure>
+<img src="\imgs\NjRAT\23.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>数据通过 Base64 进行编码传输。</p>
-<p><img src="\imgs\NjRAT\24.png" alt="undefined"></p>
-<p><img src="\imgs\NjRAT\25.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\24.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<figure>
+<img src="\imgs\NjRAT\25.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>判断用户是否进行关机注销操作，若正常关机就会正常结束进程，若走非关机流程去强行终止进程，就会触发蓝屏。</p>
-<p><img src="\imgs\NjRAT\26.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\26.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>接下来就是程序的主循环框架，进入每秒一次的无限循环，降低内存占用、发送心跳包以及检查自启动功能。</p>
-<p><img src="\imgs\NjRAT\27.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\27.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>每 5 秒降低一次自身内存占用，加强隐蔽性。</p>
-<p><img src="\imgs\NjRAT\28.png" alt="undefined"></p>
-<p>每约 8 秒获取一次当前活动窗口信息，若与上次不同则更新缓存并发送“act”命令到 C2 上报。</p>
-<p><img src="\imgs\NjRAT\29.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\28.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>每约 8
+秒获取一次当前活动窗口信息，若与上次不同则更新缓存并发送“act”命令到 C2
+上报。</p>
+<figure>
+<img src="\imgs\NjRAT\29.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>检查注册表中自启动项，确保程序始终随系统开机启动。</p>
-<p><img src="\imgs\NjRAT\30.png" alt="undefined"></p>
-<h1 id="4-动态分析"><a href="#4-动态分析" class="headerlink" title="4. 动态分析"></a>4. 动态分析</h1><h2 id="4-1-基于-Process-Monitor-的行为分析"><a href="#4-1-基于-Process-Monitor-的行为分析" class="headerlink" title="4.1 基于 Process Monitor 的行为分析"></a>4.1 基于 Process Monitor 的行为分析</h2><p>我们采用 Process Monitor 来监控 NjRAT 客户端程序的具体行为。</p>
-<p><img src="\imgs\NjRAT\31.png" alt="undefined"></p>
-<p>程序运行后，首先在注册表中写入 <code>di = &quot;!&quot;</code> 作为启动标记。</p>
+<figure>
+<img src="\imgs\NjRAT\30.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<h1 id="动态分析">4. 动态分析</h1>
+<h2 id="基于-process-monitor-的行为分析">4.1 基于 Process Monitor
+的行为分析</h2>
+<p>我们采用 Process Monitor 来监控 NjRAT 客户端程序的具体行为。</p>
+<figure>
+<img src="\imgs\NjRAT\31.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>程序运行后，首先在注册表中写入 <code>di = "!"</code>
+作为启动标记。</p>
 <p><img src="\imgs\NjRAT\32.png" alt="undefined" style="zoom:80%;" /></p>
 <p>调用 netsh ，添加防火墙例外。</p>
 <p><img src="\imgs\NjRAT\33.png" alt="undefined" style="zoom:80%;" /></p>
 <p>往注册表中写入启动项，指向 Server.exe 所在的路径。</p>
 <p><img src="\imgs\NjRAT\34.png" alt="undefined" style="zoom:80%;" /></p>
-<p>在后面日志中，可以看到，程序重复对该键进行 <code>RegQueryValue</code> / <code>RegSetValue</code> 操作，实现注册表持久化。</p>
-<p><img src="\imgs\NjRAT\35.png" alt="undefined"></p>
-<p>随后将 Server.exe 拷贝到启动文件夹 <code>%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code>，命名为 5efb366650164bc7ebaf4ef0b452f861.exe，并设置文件属性为隐藏。</p>
-<p><img src="\imgs\NjRAT\36.png" alt="undefined"></p>
+<p>在后面日志中，可以看到，程序重复对该键进行 <code>RegQueryValue</code>
+/ <code>RegSetValue</code> 操作，实现注册表持久化。</p>
+<figure>
+<img src="\imgs\NjRAT\35.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>随后将 Server.exe 拷贝到启动文件夹
+<code>%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code>，命名为
+5efb366650164bc7ebaf4ef0b452f861.exe，并设置文件属性为隐藏。</p>
+<figure>
+<img src="\imgs\NjRAT\36.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>taskkill 杀掉指定进程。</p>
 <p><img src="\imgs\NjRAT\37.png" alt="undefined" style="zoom:80%;" /></p>
-<p>往每个磁盘的根目录写入 <code>svchost.exe</code> 与 <code>autorun.inf</code> 文件，以实现通过 U 盘传播的功能。但由于如今 Win10 安全策略的收紧，该写入操作失败，返回 ACCESS DENIED。</p>
-<p><img src="\imgs\NjRAT\38.png" alt="undefined"></p>
-<p>早期 Win7 在插入 U 盘 / 双击盘符时，系统会读取 <code>autorun.inf</code>，自动执行 <code>open=</code> 或 <code>shellexecute=</code> 后的命令，但在 Win7 打了 KB967715 等补丁之后，策略就变成：只对 CD/DVD 光驱的 autorun 保留自动执行，对 U 盘、移动硬盘等可移动磁盘，一律忽略 autorun 的执行项。</p>
-<p>但现今绝大多数用户所使用的环境已经是 Windows 7 及以上版本，基于 <code>autorun.inf</code> 的 U 盘自动传播机制在现代系统中的实际效果已非常有限。</p>
-<p>所以我们转到 Windows XP 系统进行测试，程序如期往各个盘下写入了 <code>svchost.exe</code> 和 <code>autorun.inf</code> 文件。</p>
-<p><img src="\imgs\NjRAT\39.png" alt="undefined"></p>
+<p>往每个磁盘的根目录写入 <code>svchost.exe</code> 与
+<code>autorun.inf</code> 文件，以实现通过 U 盘传播的功能。但由于如今
+Win10 安全策略的收紧，该写入操作失败，返回 ACCESS DENIED。</p>
+<figure>
+<img src="\imgs\NjRAT\38.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>早期 Win7 在插入 U 盘 / 双击盘符时，系统会读取
+<code>autorun.inf</code>，自动执行 <code>open=</code> 或
+<code>shellexecute=</code> 后的命令，但在 Win7 打了 KB967715
+等补丁之后，策略就变成：只对 CD/DVD 光驱的 autorun 保留自动执行，对 U
+盘、移动硬盘等可移动磁盘，一律忽略 autorun 的执行项。</p>
+<p>但现今绝大多数用户所使用的环境已经是 Windows 7 及以上版本，基于
+<code>autorun.inf</code> 的 U
+盘自动传播机制在现代系统中的实际效果已非常有限。</p>
+<p>所以我们转到 Windows XP 系统进行测试，程序如期往各个盘下写入了
+<code>svchost.exe</code> 和 <code>autorun.inf</code> 文件。</p>
+<figure>
+<img src="\imgs\NjRAT\39.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>之后程序创建了自己的注册表配置根键，用来保存受害者 ID 等信息。</p>
-<p><img src="\imgs\NjRAT\40.png" alt="undefined"></p>
-<p>之前进行代码分析的时候，我们知道程序存在 Protect Process [BSOD] 的操作。在创建 NjRAT 的时候若选择了该选项，运行时会执行 OK.pr() 函数，该函数会将程序自身的 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/api/winternl/nf-winternl-ntqueryinformationprocess">ProcessInformationClass</a> 设置为 29。</p>
-<p><img src="\imgs\NjRAT\41.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\40.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>之前进行代码分析的时候，我们知道程序存在 Protect Process [BSOD]
+的操作。在创建 NjRAT 的时候若选择了该选项，运行时会执行 OK.pr()
+函数，该函数会将程序自身的 <a
+target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/api/winternl/nf-winternl-ntqueryinformationprocess">ProcessInformationClass</a>
+设置为 29。</p>
+<figure>
+<img src="\imgs\NjRAT\41.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>从而该进程将被归类为关键进程，任何试图中断其运行的操作都会导致蓝屏死机（BSOD）。</p>
-<p><img src="\imgs\NjRAT\42.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\42.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>在任务管理器中 End Process 被置灰。</p>
-<p><img src="\imgs\NjRAT\43.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\43.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>强行终止会导致蓝屏。</p>
-<p><img src="\imgs\NjRAT\44.png" alt="undefined"></p>
-<p>我们可以通过内核工具 PCHunter 去终止进程，通过抹除其 critical 标志位，再杀掉该进程，这样就不会直接蓝屏。</p>
-<p><img src="\imgs\NjRAT\45.png" alt="undefined"></p>
-<h2 id="4-2-基于-Wireshark-的网络通信分析"><a href="#4-2-基于-Wireshark-的网络通信分析" class="headerlink" title="4.2 基于 Wireshark 的网络通信分析"></a>4.2 基于 Wireshark 的网络通信分析</h2><p>受害机器与攻击者主机初始化 TCP 三次握手。</p>
-<p><img src="\imgs\NjRAT\46.png" alt="undefined"></p>
-<p>随后受害机器会向攻击者机器发送第一条信息，除 NjRAT 设置的机器 ID 为 Base64 编码，其他信息均为明文。消息包含：机器 ID、主机名、用户名、文件最后写入日期、操作系统名、系统架构、是否有摄像头、版本号、当前活动窗口标题。</p>
-<p><img src="\imgs\NjRAT\47.png" alt="undefined"></p>
-<p>再发送第二条消息，此信息经 Base64 编码，包含：受害者姓名、受害者IP和端口号、可执行文件位置、可执行文件名称、以及与 NjRAT 创建期间选择的选项相对应的 True 和 False 值列表。</p>
-<p><img src="\imgs\NjRAT\48.png" alt="undefined"></p>
+<figure>
+<img src="\imgs\NjRAT\44.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>我们可以通过内核工具 PCHunter 去终止进程，通过抹除其 critical
+标志位，再杀掉该进程，这样就不会直接蓝屏。</p>
+<figure>
+<img src="\imgs\NjRAT\45.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<h2 id="基于-wireshark-的网络通信分析">4.2 基于 Wireshark
+的网络通信分析</h2>
+<p>受害机器与攻击者主机初始化 TCP 三次握手。</p>
+<figure>
+<img src="\imgs\NjRAT\46.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>随后受害机器会向攻击者机器发送第一条信息，除 NjRAT 设置的机器 ID 为
+Base64 编码，其他信息均为明文。消息包含：机器
+ID、主机名、用户名、文件最后写入日期、操作系统名、系统架构、是否有摄像头、版本号、当前活动窗口标题。</p>
+<figure>
+<img src="\imgs\NjRAT\47.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>再发送第二条消息，此信息经 Base64
+编码，包含：受害者姓名、受害者IP和端口号、可执行文件位置、可执行文件名称、以及与
+NjRAT 创建期间选择的选项相对应的 True 和 False 值列表。</p>
+<figure>
+<img src="\imgs\NjRAT\48.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
 <p>解码可得到明文数据。</p>
-<p><img src="\imgs\NjRAT\49.png" alt="undefined"></p>
-<p>当攻击者使用 Keylogger 功能时，攻击端会向被控计算机发送 kl 命令，受害者计算机随后将发送 Base64 编码的击键日志。</p>
-<p><img src="\imgs\NjRAT\50.png" alt="undefined"></p>
-<p>使用 Remote Desktop 功能时，被控方桌面的实时画面以 TCP 数据包流通过一帧一帧的 JPEG 图片数据发送。</p>
-<p>包头为：<code>CAP|&#39;|&#39;|</code></p>
-<p>包体为：JPEG 图片数据，例如这里传输内容就是当前桌面的 35x23 缩略图</p>
-<p><img src="\imgs\NjRAT\51.png" alt="undefined"></p>
-<p>使用 Get Passwords 功能时，攻击机下达 pas 命令，被控端访问 <a target="_blank" rel="noopener" href="https://dl.dropbox.com/s/p84aaz28t0hepul/Pass.exe?dl=0">Dropbox</a> 下载 Pass.exe，扫描系统中的密码，并写入到 temp.txt，再通过 <code>pas|&#39;|&#39;|&lt;Base64(temp.txt)&gt;</code> 回传到攻击端。</p>
-<p><img src="\imgs\NjRAT\52.png" alt="undefined"></p>
-<h2 id="4-3-基于在线沙箱的行为分析"><a href="#4-3-基于在线沙箱的行为分析" class="headerlink" title="4.3 基于在线沙箱的行为分析"></a>4.3 基于在线沙箱的行为分析</h2><p>除本地虚拟机环境外，为了从另一个角度验证 NjRAT 样本的行为特征，我们将生成的样本上传至在线动态分析沙箱（<a target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/cf4ab33c0a0776a1d42f501922d2306cf2c6555e70d8592a9b5162bd154a98fe/behavior">Virustotal</a> 与 <a target="_blank" rel="noopener" href="https://app.any.run/tasks/3629b4a7-3b33-4023-a081-189f974f63a1">ANY.RUN</a>）中进行自动化行为分析。</p>
-<p>由于实验环境中 NjRAT 客户端配置的 C2 地址位于内网，仅在局域网内可达，将该样本直接上传至公网在线沙箱时无法建立完整的 C2 会话，行为特征不够完整。因此，这里我们选取 ANY.RUN 平台上公开的一个 NjRAT 样本（文件名 Documentos.ppam，MD5：1a5ab39ecf526a79b4cd098a1d16de82）作为参考，对其<a target="_blank" rel="noopener" href="https://any.run/report/38f04e48c23dba3596d1773c81cca0abd21a4caeb635d079ed3efcdae193c1bd/3c2b04eb-08ac-4081-addf-6b9683e0322d/">自动化行为分析结果</a>进行简要整理，从真实投递场景的角度补充验证前文的分析结论。</p>
+<figure>
+<img src="\imgs\NjRAT\49.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>当攻击者使用 Keylogger 功能时，攻击端会向被控计算机发送 kl
+命令，受害者计算机随后将发送 Base64 编码的击键日志。</p>
+<figure>
+<img src="\imgs\NjRAT\50.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>使用 Remote Desktop 功能时，被控方桌面的实时画面以 TCP
+数据包流通过一帧一帧的 JPEG 图片数据发送。</p>
+<p>包头为：<code>CAP|'|'|</code></p>
+<p>包体为：JPEG 图片数据，例如这里传输内容就是当前桌面的 35x23
+缩略图</p>
+<figure>
+<img src="\imgs\NjRAT\51.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p>使用 Get Passwords 功能时，攻击机下达 pas 命令，被控端访问 <a
+target="_blank" rel="noopener" href="https://dl.dropbox.com/s/p84aaz28t0hepul/Pass.exe?dl=0">Dropbox</a>
+下载 Pass.exe，扫描系统中的密码，并写入到 temp.txt，再通过
+<code>pas|'|'|&lt;Base64(temp.txt)&gt;</code> 回传到攻击端。</p>
+<figure>
+<img src="\imgs\NjRAT\52.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<h2 id="基于在线沙箱的行为分析">4.3 基于在线沙箱的行为分析</h2>
+<p>除本地虚拟机环境外，为了从另一个角度验证 NjRAT
+样本的行为特征，我们将生成的样本上传至在线动态分析沙箱（<a
+target="_blank" rel="noopener" href="https://www.virustotal.com/gui/file/cf4ab33c0a0776a1d42f501922d2306cf2c6555e70d8592a9b5162bd154a98fe/behavior">Virustotal</a>
+与 <a
+target="_blank" rel="noopener" href="https://app.any.run/tasks/3629b4a7-3b33-4023-a081-189f974f63a1">ANY.RUN</a>）中进行自动化行为分析。</p>
+<p>由于实验环境中 NjRAT 客户端配置的 C2
+地址位于内网，仅在局域网内可达，将该样本直接上传至公网在线沙箱时无法建立完整的
+C2 会话，行为特征不够完整。因此，这里我们选取 ANY.RUN 平台上公开的一个
+NjRAT 样本（文件名
+Documentos.ppam，MD5：1a5ab39ecf526a79b4cd098a1d16de82）作为参考，对其<a
+target="_blank" rel="noopener" href="https://any.run/report/38f04e48c23dba3596d1773c81cca0abd21a4caeb635d079ed3efcdae193c1bd/3c2b04eb-08ac-4081-addf-6b9683e0322d/">自动化行为分析结果</a>进行简要整理，从真实投递场景的角度补充验证前文的分析结论。</p>
 <p>下图是 NjRAT 在此次真实投递场景下的生命周期：</p>
-<p><img src="\imgs\NjRAT\53.png" alt="undefined"></p>
-<p><a target="_blank" rel="noopener" href="https://any.run/report/38f04e48c23dba3596d1773c81cca0abd21a4caeb635d079ed3efcdae193c1bd/3c2b04eb-08ac-4081-addf-6b9683e0322d/">ANY.RUN</a>将该样本识别为 njRAT / Bladabindi 远程访问木马，文件类型为 PowerPoint 插件（application/vnd.openxmlformats-officedocument.presentationml.presentation），并标注了 macros、macros-on-open、rat、njrat 等标签，说明该恶意代码是通过启用 Office 宏在打开文档时自动执行的。</p>
-<p>在进程树中可以看到，受害者在打开 Documentos.ppam 后，由 POWERPNT.EXE 进程加载并执行宏代码，随后由该进程释放并启动后续的恶意可执行文件（NjRAT 客户端），其投递链为：钓鱼文档 → Office 进程 → 木马载荷。</p>
-<p>和本地我们生成的 NjRAT EXE 相比，该样本多了一层 Office 文档包装和宏执行阶段。</p>
-</article><div class="post-copyright"><div class="post-copyright__title"><span class="post-copyright-info"><h>NjRAT 样本分析</h></span></div><div class="post-copyright__type"><span class="post-copyright-info"><a href="https://cyr1s.vercel.app/2025/11/23/NjRAT%20%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90/">https://cyr1s.vercel.app/2025/11/23/NjRAT 样本分析/</a></span></div><div class="post-copyright-m"><div class="post-copyright-m-info"><div class="post-copyright-a"><h>作者</h><div class="post-copyright-cc-info"><h>Cyr1s</h></div></div><div class="post-copyright-c"><h>发布于</h><div class="post-copyright-cc-info"><h>2025-11-23</h></div></div><div class="post-copyright-u"><h>更新于</h><div class="post-copyright-cc-info"><h>2025-11-23</h></div></div><div class="post-copyright-c"><h>许可协议</h><div class="post-copyright-cc-info"><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a rel="noopener" target="_blank" title="木兰公共许可证 BY-PL-SA" href="http://license.coscl.org.cn/MulanPubL-2.0">木兰公共许可证 BY-PL-SA</a></div></div></div></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90/">样本分析</a></div><div class="post_share"><div class="social-share" data-image="/imgs/NjRAT.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/08/15/%E6%84%9A%E5%AE%89%E7%A7%91%E6%8A%80%E4%BA%8C%E9%9D%A2%E9%9D%B6%E5%9C%BAWriteUp/" title="愚安科技二面靶场WriteUp"><img class="cover" src="/imgs/MeetSec/MeetSec.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next</div><div class="next_info">愚安科技二面靶场WriteUp</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://avatars.fastly.steamstatic.com/c857041ec42fa3fe98752c5ae357e69ac42a3639_full.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Cyr1s</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Cyr1s-dev"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Cyr1s-dev" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content"><center>主域名：<br><a target="_blank" rel="noopener" href="https://Cyr1s-dev.github.io/"><b><font color="#5ea6e5">cyr1s-dev.github.io</font></b></a><br>备用域名：<br><a href="https://cyr1s.vercel.app/"><b><font color="#5ea6e5">cyr1s.vercel.app</font></b></a></center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">1. 概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">2. 环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-NjRAT-%E5%88%9B%E5%BB%BA"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 NjRAT 创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-NjRAT-%E5%88%A9%E7%94%A8"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 NjRAT 利用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">3. 静态分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 代码分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">4. 动态分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E5%9F%BA%E4%BA%8E-Process-Monitor-%E7%9A%84%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 基于 Process Monitor 的行为分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E5%9F%BA%E4%BA%8E-Wireshark-%E7%9A%84%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%88%86%E6%9E%90"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 基于 Wireshark 的网络通信分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E5%9F%BA%E4%BA%8E%E5%9C%A8%E7%BA%BF%E6%B2%99%E7%AE%B1%E7%9A%84%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 基于在线沙箱的行为分析</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('/imgs/NjRAT.png')"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Cyr1s</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+<figure>
+<img src="\imgs\NjRAT\53.png" alt="undefined" />
+<figcaption aria-hidden="true">undefined</figcaption>
+</figure>
+<p><a
+target="_blank" rel="noopener" href="https://any.run/report/38f04e48c23dba3596d1773c81cca0abd21a4caeb635d079ed3efcdae193c1bd/3c2b04eb-08ac-4081-addf-6b9683e0322d/">ANY.RUN</a>将该样本识别为
+njRAT / Bladabindi 远程访问木马，文件类型为 PowerPoint
+插件（application/vnd.openxmlformats-officedocument.presentationml.presentation），并标注了
+macros、macros-on-open、rat、njrat 等标签，说明该恶意代码是通过启用
+Office 宏在打开文档时自动执行的。</p>
+<p>在进程树中可以看到，受害者在打开 Documentos.ppam 后，由 POWERPNT.EXE
+进程加载并执行宏代码，随后由该进程释放并启动后续的恶意可执行文件（NjRAT
+客户端），其投递链为：钓鱼文档 → Office 进程 → 木马载荷。</p>
+<p>和本地我们生成的 NjRAT EXE 相比，该样本多了一层 Office
+文档包装和宏执行阶段。</p>
+</article><div class="post-copyright"><div class="post-copyright__title"><span class="post-copyright-info"><h>NjRAT 样本分析</h></span></div><div class="post-copyright__type"><span class="post-copyright-info"><a href="https://cyr1s.vercel.app/2025/11/23/NjRAT%20%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90/">https://cyr1s.vercel.app/2025/11/23/NjRAT 样本分析/</a></span></div><div class="post-copyright-m"><div class="post-copyright-m-info"><div class="post-copyright-a"><h>作者</h><div class="post-copyright-cc-info"><h>Cyr1s</h></div></div><div class="post-copyright-c"><h>发布于</h><div class="post-copyright-cc-info"><h>2025-11-23</h></div></div><div class="post-copyright-u"><h>更新于</h><div class="post-copyright-cc-info"><h>2025-11-23</h></div></div><div class="post-copyright-c"><h>许可协议</h><div class="post-copyright-cc-info"><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a rel="noopener" target="_blank" title="木兰公共许可证 BY-PL-SA" href="http://license.coscl.org.cn/MulanPubL-2.0">木兰公共许可证 BY-PL-SA</a></div></div></div></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90/">样本分析</a></div><div class="post_share"><div class="social-share" data-image="/imgs/NjRAT.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/08/15/%E6%84%9A%E5%AE%89%E7%A7%91%E6%8A%80%E4%BA%8C%E9%9D%A2%E9%9D%B6%E5%9C%BAWriteUp/" title="愚安科技二面靶场WriteUp"><img class="cover" src="/imgs/MeetSec/MeetSec.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next</div><div class="next_info">愚安科技二面靶场WriteUp</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://avatars.fastly.steamstatic.com/c857041ec42fa3fe98752c5ae357e69ac42a3639_full.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Cyr1s</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Cyr1s-dev"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Cyr1s-dev" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content"><center>主域名：<br><a target="_blank" rel="noopener" href="https://Cyr1s-dev.github.io/"><b><font color="#5ea6e5">cyr1s-dev.github.io</font></b></a><br>备用域名：<br><a href="https://cyr1s.vercel.app/"><b><font color="#5ea6e5">cyr1s.vercel.app</font></b></a></center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">1. 概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">2. 环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#njrat-%E5%88%9B%E5%BB%BA"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 NjRAT 创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#njrat-%E5%88%A9%E7%94%A8"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 NjRAT 利用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">3. 静态分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 代码分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">4. 动态分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-process-monitor-%E7%9A%84%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 基于 Process Monitor
+的行为分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-wireshark-%E7%9A%84%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E5%88%86%E6%9E%90"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 基于 Wireshark
+的网络通信分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%9C%A8%E7%BA%BF%E6%B2%99%E7%AE%B1%E7%9A%84%E8%A1%8C%E4%B8%BA%E5%88%86%E6%9E%90"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 基于在线沙箱的行为分析</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('/imgs/NjRAT.png')"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2025 By Cyr1s</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.<p><a target="_blank" href="https://hexo.io/"><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&logo=hexo" title="博客框架为Hexo"></a>&nbsp;<a target="_blank" href="https://butterfly.js.org/"><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&logo=bitdefender" title="主题采用butterfly"></a>&nbsp;<a target="_blank" href="https://www.jsdelivr.com/"><img src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&logo=jsDelivr" title="本站使用JsDelivr为静态资源提供CDN加速"></a> &nbsp;<a target="_blank" href="https://vercel.com/ "><img src="https://img.shields.io/badge/Hosted-Vervel-brightgreen?style=flat&logo=Vercel" title="本站采用双线部署，默认线路托管于Vercel"></a>&nbsp;<a target="_blank" href="https://github.com/"><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&logo=GitHub" title="本站项目由Gtihub托管"></a>&nbsp;<a target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&logo=Claris" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"></a></p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
   window.MathJax = {
     tex: {
       inlineMath: [['$', '$'], ['\\(', '\\)']],
